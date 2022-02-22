@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Data
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class Animal {
     private long id;

@@ -49,6 +49,7 @@ public class SpringBootJdbcFoundationsApplication {
         animalDao.delete(3);
         System.out.println("animalDao.count() = " + animalDao.count());
 
+
         Console.main(args);
     }
 
