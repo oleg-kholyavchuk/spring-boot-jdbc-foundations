@@ -28,6 +28,8 @@ public class SpringBootJdbcFoundationsApplication {
         updateStudent.setId(1L);
         studentDao.updateStudent(updateStudent);
 
+        System.out.println("studentDao.findById(1L) = " + studentDao.findById(1L));
+
         studentDao.delete(updateStudent);
         System.out.println("studentDao.count() = " + studentDao.count());
 
@@ -41,6 +43,8 @@ public class SpringBootJdbcFoundationsApplication {
         Animal updateAnimal = new Animal("The Blue Whale", 150_000);
         updateAnimal.setId(2L);
         animalDao.updateAnimal(updateAnimal);
+
+        System.out.println("animalDao.findById(1L) = " + animalDao.findById(1L));
 
         animalDao.delete(3);
         System.out.println("animalDao.count() = " + animalDao.count());
