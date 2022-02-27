@@ -5,16 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import ru.itsjava.domain.Animal;
+import ru.itsjava.domain.Pet;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @JdbcTest
 @Import(AnimalDaoImpl.class)
 public class AnimalJdbcDaoImplTest {
-    private static final String DEFAULT_VIEW = "Human";
+    private static final String DEFAULT_VIEW = "Sibo-uno";
     private static final int DEFAULT_WEIGHT = 100;
     private static final long CURRENT_ID = 3L;
-    private static final long NEW_ID = 5L;
+    public static final Pet DEFAULT_PET_ID = new Pet(1L, "Dog");
 
     @Autowired
     private AnimalDao animalDao;
@@ -28,17 +30,17 @@ public class AnimalJdbcDaoImplTest {
 
     @Test
     public void shouldHaveCorrectInsert() {
-        Animal expectedAnimal = new Animal(NEW_ID, DEFAULT_VIEW, DEFAULT_WEIGHT);
-        animalDao.insert(expectedAnimal);
+        Animal expectedAnimal = new Animal(DEFAULT_VIEW, DEFAULT_WEIGHT, DEFAULT_PET_ID);
+        long idFromDB = animalDao.insert(expectedAnimal);
+        Animal actualAnimal = animalDao.findById(idFromDB);
 
-        Animal actualAnimal = animalDao.findById(NEW_ID);
-
-        assertEquals(actualAnimal, expectedAnimal);
+        assertAll(() -> assertEquals(actualAnimal.getVie(), expectedAnimal.getVie()),
+                () -> assertEquals(actualAnimal.getWei(), expectedAnimal.getWei()));
     }
 
     @Test
     public void shouldHaveCorrectUpdate() {
-        Animal expectedAnimal = new Animal(CURRENT_ID, DEFAULT_VIEW, DEFAULT_WEIGHT);
+        Animal expectedAnimal = new Animal(CURRENT_ID, DEFAULT_VIEW, DEFAULT_WEIGHT, DEFAULT_PET_ID);
         animalDao.update(expectedAnimal);
 
         Animal actualAnimal = animalDao.findById(CURRENT_ID);

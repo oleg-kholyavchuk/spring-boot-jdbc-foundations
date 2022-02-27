@@ -5,11 +5,9 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class Animal {
+@RequiredArgsConstructor
+public class Pet {
     private long id;
-    private final String vie;
-    private final int wei;
-    private final Pet pet;
+    private final String homePet;
 }

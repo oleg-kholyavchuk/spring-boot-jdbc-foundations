@@ -5,8 +5,8 @@ import ru.itsjava.domain.Animal;
 public interface AnimalDao {
     int count();
 
-    void insert(Animal animal);
-    void updateAnimal(Animal animal);
+    long insert(Animal animal);
+    void update(Animal animal);
     void delete(long id);
 
     Animal findById(long id);
