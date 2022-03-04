@@ -34,8 +34,8 @@ public class AnimalJdbcDaoImplTest {
         long idFromDB = animalDao.insert(expectedAnimal);
         Animal actualAnimal = animalDao.findById(idFromDB);
 
-        assertAll(() -> assertEquals(actualAnimal.getVie(), expectedAnimal.getVie()),
-                () -> assertEquals(actualAnimal.getWei(), expectedAnimal.getWei()));
+        assertAll(() -> assertEquals(actualAnimal.getView(), expectedAnimal.getView()),
+                () -> assertEquals(actualAnimal.getWeight(), expectedAnimal.getWeight()));
     }
 
     @Test

@@ -2,6 +2,8 @@ package ru.itsjava.dao;
 
 import ru.itsjava.domain.Animal;
 
+import java.util.List;
+
 public interface AnimalDao {
     int count();
 
@@ -10,4 +12,5 @@ public interface AnimalDao {
     void delete(long id);
 
     Animal findById(long id);
+    List<Animal> findAll();
 }

@@ -3,8 +3,8 @@ DROP TABLE IF EXISTS animals, pets;
 
 CREATE TABLE animals(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
-vie VARCHAR(256),
-wei INT,
+view VARCHAR(256),
+weight INT,
 homePets_id BIGINT
 );
 

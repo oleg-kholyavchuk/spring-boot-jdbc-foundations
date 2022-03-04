@@ -12,6 +12,7 @@ import ru.itsjava.domain.Pet;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -29,9 +30,9 @@ public class AnimalDaoImpl implements AnimalDao {
     @Override
     public long insert(Animal animal) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        Map<String, Object> params = Map.of("vie", animal.getVie(), "wei", animal.getWei(),
+        Map<String, Object> params = Map.of("view", animal.getView(), "weight", animal.getWeight(),
                 "homePets_id", animal.getPet().getId());
-        jdbc.update("insert into animals(vie, wei, homePets_id) values(:vie, :wei, :homePets_id)",
+        jdbc.update("insert into animals(view, weight, homePets_id) values(:view, :weight, :homePets_id)",
                 new MapSqlParameterSource(params), keyHolder);
 
         return keyHolder.getKey().longValue();
@@ -39,9 +40,9 @@ public class AnimalDaoImpl implements AnimalDao {
 
     @Override
     public void update(Animal animal) {
-        Map<String, Object> params = Map.of("id", animal.getId(), "vie", animal.getVie(), "wei", animal.getWei());
-        jdbc.update("update animals set vie = :vie where id = :id", params);
-        jdbc.update("update animals set wei = :wei where id = :id", params);
+        Map<String, Object> params = Map.of("id", animal.getId(), "view", animal.getView(), "weight", animal.getWeight());
+        jdbc.update("update animals set view = :view where id = :id", params);
+        jdbc.update("update animals set weight = :weight where id = :id", params);
     }
 
     @Override
@@ -53,16 +54,22 @@ public class AnimalDaoImpl implements AnimalDao {
     @Override
     public Animal findById(long id) {
         Map<String, Object> params = Map.of("id", id);
-        return jdbc.queryForObject("select a.id as SID, vie, wei, p.id as FID, homePet from animals a, pets p  where a.id = :id " +
+        return jdbc.queryForObject("select a.id as AID, view, weight, " +
+                "p.id as PID, homePet from animals a, pets p  where a.id = :id " +
                 " and a.homePets_id = p.id", params, new AnimalsMapper());
+    }
+
+    @Override
+    public List<Animal> findAll() {
+        return jdbc.query("select a.id as AID, view, weight, p.id as PID, homePet from animals a, pets p  where a.homePets_id = p.id ", new AnimalsMapper());
     }
 
     private static class AnimalsMapper implements RowMapper<Animal> {
 
         @Override
         public Animal mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Animal(rs.getLong("SID"), rs.getString("vie"), rs.getInt("wei"),
-                    new Pet(rs.getLong("FID"), rs.getString("homePet")));
+            return new Animal(rs.getLong("AID"), rs.getString("view"), rs.getInt("weight"),
+                    new Pet(rs.getLong("PID"), rs.getString("homePet")));
         }
     }
 }
